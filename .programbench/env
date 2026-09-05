@@ -1,0 +1,8 @@
+# cmatrix calls ncurses initscr(); with a valid TERM it renders the animation,
+# with a broken/absent one it exits. Test branches disagree on which they expect
+# (some assert the render loop runs, others assert a terminal-init failure), and
+# they were generated in different reference containers. Pin a valid TERM so the
+# render-loop branch and every tmux/script TUI test work; the handful of tests
+# that require a *broken* terminal (and assert Linux ncurses' exact init-failure
+# string, which differs on macOS) are course-excluded as environment-divergent.
+export TERM=xterm

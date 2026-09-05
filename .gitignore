@@ -30,3 +30,13 @@ cmatrix.exe
 *.core
 CMakeCache.txt
 CMakeFiles/
+
+# ProgramBench course-competition artifacts
+executable
+configure~
+.programbench/venv/
+.programbench/gitconfig
+.programbench/home/
+.programbench/tests/
+.programbench/run/
+.programbench/shims/

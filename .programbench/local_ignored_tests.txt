@@ -1,6 +1,6 @@
 # Course-side exclusions: tests that are environment-sensitive outside the
 # benchmark containers. Format: <branch>/<classname>.<testname>
-#
+
 # cmatrix calls ncurses initscr()/newterm(). These tests all assert cmatrix's
 # behavior in a *broken-terminal* environment (no usable TERM): they expect it
 # to exit and print Linux ncurses' exact "Error opening terminal: unknown."

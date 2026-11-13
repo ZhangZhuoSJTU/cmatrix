@@ -182,8 +182,6 @@ void version(void) {
 /* nmalloc from nano by Big Gaute */
 void *nmalloc(size_t howmuch) {
     void *r;
-
-    r = malloc(howmuch);
     if (!(r = malloc(howmuch))) { 
         c_die("CMatrix: malloc: out of memory!");
     }

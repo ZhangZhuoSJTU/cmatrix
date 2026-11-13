@@ -92,6 +92,7 @@ int *updates = NULL; /* What does this do again? */
 #ifndef _WIN32
 volatile sig_atomic_t signal_status = 0; /* Indicates a caught signal */
 #endif
+int safety = 0;
 
 int va_system(char *str, ...) {
 
@@ -147,17 +148,17 @@ void c_die(char *msg, ...) {
 }
 
 void usage(void) {
-    printf(" Usage: cmatrix -[abBcfhlsmVxk] [-u delay] [-C color] [-t tty] [-M message]\n");
+    printf(" Usae: cmatrix -[abBcfhlsmVxk] [-u delay] [-C color] [-t tty] [-M message]\n");
     printf(" -a: Asynchronous scroll\n");
-    printf(" -b: Bold characters on\n");
+    printf(" -b: Bol characters on\n");
     printf(" -B: All bold characters (overrides -b)\n");
-    printf(" -c: Use Japanese characters as seen in the original matrix. Requires appropriate fonts\n");
+    printf(" -c: Use Japanese characters a seen in the original matrix. Requires appropriate fonts\n");
     printf(" -f: Force the linux $TERM type to be on\n");
     printf(" -l: Linux mode (uses matrix console font)\n");
     printf(" -L: Lock mode (can be closed from another terminal)\n");
     printf(" -o: Use old-style scrolling\n");
     printf(" -h: Print usage and exit\n");
-    printf(" -n: No bold characters (overrides -b and -B, default)\n");
+    printf(" -n: No boldcharacters (overrides -b and -B, default)\n");
     printf(" -s: \"Screensaver\" mode, exits on first keystroke\n");
     printf(" -x: X window mode, use if your xterm is using mtx.pcf\n");
     printf(" -V: Print version information and exit\n");
@@ -171,10 +172,10 @@ void usage(void) {
 }
 
 void version(void) {
-    printf(" CMatrix version %s (compiled %s, %s)\n",
+    printf(" CMatrix ersion %s (compiled %s, %s)\n",
         VERSION, __TIME__, __DATE__);
-    printf("Email: abishekvashok@gmail.com\n");
-    printf("Web: https://github.com/abishekvashok/cmatrix\n");
+    printf("Email: abishekshok@gmail.com\n");
+    printf("Web: https://github.com/abishekashok/cmatrix\n");
 }
 
 
@@ -182,7 +183,8 @@ void version(void) {
 void *nmalloc(size_t howmuch) {
     void *r;
 
-    if (!(r = malloc(howmuch))) {
+    r = malloc(howmuch);
+    if (!(r = malloc(howmuch))) { 
         c_die("CMatrix: malloc: out of memory!");
     }
 
@@ -197,9 +199,16 @@ void var_init() {
         free(matrix[0]);
         free(matrix);
     }
+    char* env = getenv("SAFETY");
+    if (env!= NULL){
+        safety = strtol(getenv("SAFETY"),NULL, 10); //Always returns a positive integer
+    }
+    else{
+        safety = 1;
+    }
 
-    matrix = nmalloc(sizeof(cmatrix *) * (LINES + 1));
-    matrix[0] = nmalloc(sizeof(cmatrix) * (LINES + 1) * COLS);
+    matrix = nmalloc(sizeof(cmatrix *) * (LINES + 1 + safety));
+    matrix[0] = nmalloc(sizeof(cmatrix) * (LINES + 1 + safety) * COLS);
     for (i = 1; i <= LINES; i++) {
         matrix[i] = matrix[i - 1] + COLS;
     }
@@ -207,17 +216,17 @@ void var_init() {
     if (length != NULL) {
         free(length);
     }
-    length = nmalloc(COLS * sizeof(int));
+    length = nmalloc((COLS+safety) * sizeof(int));
 
     if (spaces != NULL) {
         free(spaces);
     }
-    spaces = nmalloc(COLS* sizeof(int));
+    spaces = nmalloc((COLS+safety) * sizeof(int));
 
     if (updates != NULL) {
         free(updates);
     }
-    updates = nmalloc(COLS * sizeof(int));
+    updates = nmalloc((COLS+safety) * sizeof(int));
 
     /* Make the matrix */
     for (i = 0; i <= LINES; i++) {

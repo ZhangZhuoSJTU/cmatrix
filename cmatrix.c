@@ -148,17 +148,17 @@ void c_die(char *msg, ...) {
 }
 
 void usage(void) {
-    printf(" Usae: cmatrix -[abBcfhlsmVxk] [-u delay] [-C color] [-t tty] [-M message]\n");
+    printf(" Usage: cmatrix -[abBcfhlsmVxk] [-u delay] [-C color] [-t tty] [-M message]\n");
     printf(" -a: Asynchronous scroll\n");
-    printf(" -b: Bol characters on\n");
+    printf(" -b: Bold characters on\n");
     printf(" -B: All bold characters (overrides -b)\n");
-    printf(" -c: Use Japanese characters a seen in the original matrix. Requires appropriate fonts\n");
+    printf(" -c: Use Japanese characters as seen in the original matrix. Requires appropriate fonts\n");
     printf(" -f: Force the linux $TERM type to be on\n");
     printf(" -l: Linux mode (uses matrix console font)\n");
     printf(" -L: Lock mode (can be closed from another terminal)\n");
     printf(" -o: Use old-style scrolling\n");
     printf(" -h: Print usage and exit\n");
-    printf(" -n: No boldcharacters (overrides -b and -B, default)\n");
+    printf(" -n: No bold characters (overrides -b and -B, default)\n");
     printf(" -s: \"Screensaver\" mode, exits on first keystroke\n");
     printf(" -x: X window mode, use if your xterm is using mtx.pcf\n");
     printf(" -V: Print version information and exit\n");
@@ -172,10 +172,10 @@ void usage(void) {
 }
 
 void version(void) {
-    printf(" CMatrix ersion %s (compiled %s, %s)\n",
+    printf(" CMatrix version %s (compiled %s, %s)\n",
         VERSION, __TIME__, __DATE__);
-    printf("Email: abishekshok@gmail.com\n");
-    printf("Web: https://github.com/abishekashok/cmatrix\n");
+    printf("Email: abishekvashok@gmail.com\n");
+    printf("Web: https://github.com/abishekvashok/cmatrix\n");
 }
 
 

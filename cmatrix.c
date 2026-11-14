@@ -395,7 +395,11 @@ int main(int argc, char *argv[]) {
             }
             break;
         case 'M':
-            msg = strdup(optarg);
+            unsigned short msg_len = strlen(optarg);
+            msg = malloc(msg_len + 1);
+            if (!msg)
+                c_die("Cannot allocate message");
+            strcpy(msg, optarg);
             break;
         case 'n':
             bold = -1;
